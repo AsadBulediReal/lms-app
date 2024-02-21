@@ -19,7 +19,6 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Toast } from "@/components/ui/toast";
 import toast from "react-hot-toast";
 
 const formSchema = z.object({
@@ -40,7 +39,8 @@ const CreateCourse = () => {
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const response = await axios.post("/api/courses", data);
-      router.push(`/courses/${response.data.id}`);
+      router.push(`/teacher/courses/${response.data.id}`);
+      toast.success("Course created successfully!");
     } catch (error) {
       toast.error("something went wrong!");
     }
