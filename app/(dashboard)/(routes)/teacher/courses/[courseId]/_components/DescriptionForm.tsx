@@ -77,7 +77,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
       {!isEditing ? (
         <p
           className={cn(
-            "m-2 p-1 pl-4 bg-slate-200 font-medium md:text-lg rounded-md",
+            "m-2 p-1 pl-4 bg-slate-200 font-medium md:text-lg rounded-md text-ellipsis overflow-hidden",
             !initialData.description && "text-slate-500 italic"
           )}
         >

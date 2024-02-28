@@ -1,38 +1,43 @@
 import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
-import { UTApi } from "uploadthing/server";
 
 export async function POST(
   req: Request,
-  { params }: { params: { attachmentId: string; courseId: string } }
+  { params }: { params: { courseId: string } }
 ) {
   try {
-    const data = await req.json();
-
     const { userId } = auth();
+    const { title } = await req.json();
     if (!userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-
     const courseOwner = db.course.findUnique({
       where: { id: params.courseId, userId },
     });
-
     if (!courseOwner) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-
-    const newUrl = data.url.substring(data.url.lastIndexOf("/") + 1);
-    const utapi = new UTApi();
-    await utapi.deleteFiles(newUrl);
-
-    const deleteAttachment = await db.attachment.delete({
-      where: { id: params.attachmentId, courseId: params.courseId },
+    const lastChapter = await db.chapter.findFirst({
+      where: {
+        courseId: params.courseId,
+      },
+      orderBy: {
+        position: "desc",
+      },
     });
-    return NextResponse.json(deleteAttachment);
+    const newPosition = lastChapter ? lastChapter.position + 1 : 1;
+    const newChapter = await db.chapter.create({
+      data: {
+        title,
+        courseId: params.courseId,
+        position: newPosition,
+      },
+    });
+
+    return NextResponse.json(newChapter);
   } catch (error) {
-    console.log("[COURSES_ID_ATTACHMENTS]", error);
+    console.log("[CHAPTERS]", error);
     return NextResponse.json({ message: "Internal Error" }, { status: 500 });
   }
 }

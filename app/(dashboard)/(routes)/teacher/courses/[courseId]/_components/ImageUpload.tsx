@@ -21,6 +21,7 @@ const formSchema = z.object({
   imageUrl: z.string().min(1, {
     message: "Image is required",
   }),
+  deleteImageUrl: z.string().min(1).nullable(),
 });
 
 const ImageUpload = ({ initialData, courseId }: ImageUploadProps) => {
@@ -81,7 +82,10 @@ const ImageUpload = ({ initialData, courseId }: ImageUploadProps) => {
             endpoint="courseImage"
             onChange={(url) => {
               if (url) {
-                onSubmit({ imageUrl: url });
+                onSubmit({
+                  imageUrl: url,
+                  deleteImageUrl: initialData.imageUrl,
+                });
               }
             }}
           />
