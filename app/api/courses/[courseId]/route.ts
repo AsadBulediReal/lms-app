@@ -18,12 +18,20 @@ export async function PATCH(
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    if (updatedData.imageUrl) {
+    if (updatedData.deleteImageUrl) {
       const newUrl = updatedData.deleteImageUrl.substring(
         updatedData.deleteImageUrl.lastIndexOf("/") + 1
       );
       const utapi = new UTApi();
       await utapi.deleteFiles(newUrl);
+      const courseData = await db.course.update({
+        where: { id: params.courseId, userId },
+        data: {
+          imageUrl: updatedData.imageUrl,
+        },
+      });
+      return NextResponse.json(courseData);
+    } else if (!updatedData.deleteImageUrl) {
       const courseData = await db.course.update({
         where: { id: params.courseId, userId },
         data: {

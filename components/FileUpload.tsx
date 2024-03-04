@@ -17,7 +17,11 @@ const FileUpload = ({ onChange, endpoint }: FileUploadProps) => {
         onChange(res?.[0].url, res?.[0].name);
       }}
       onUploadError={(error: Error) => {
-        toast.error(`${error?.message}`);
+        if (error.message === "Unable to get presigned urls") {
+          toast.error("File size exceeds the limit.");
+        } else {
+          toast.error(`${error?.message}`);
+        }
       }}
     />
   );

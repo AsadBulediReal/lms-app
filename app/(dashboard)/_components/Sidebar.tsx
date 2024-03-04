@@ -8,7 +8,7 @@ const Sidebar = () => {
       <div className="flex justify-center pt-4">
         <Logo />
       </div>
-      <div className="flex flex-col w-full pt-4">
+      <div className="flex flex-col w-full pt-[0.64rem]">
         <SidebarRoutes />
       </div>
     </div>

@@ -18,11 +18,6 @@ export const ourFileRouter = {
     .middleware(async (req) => {
       const authResult = handelAuth();
 
-      const file = req.files;
-      if (file[0].size > 4 * 1024 * 1024) {
-        throw new UploadThingError("File size exceeds the limit.");
-      }
-
       return authResult; // Pass user ID or relevant data)
     })
     .onUploadComplete(() => {}),
@@ -31,23 +26,13 @@ export const ourFileRouter = {
     .middleware(async (req) => {
       const authResult = handelAuth();
 
-      const file = req.files;
-      if (file[0].size > 4 * 1024 * 1024) {
-        throw new UploadThingError("File size exceeds the limit.");
-      }
-
       return authResult; // Pass user ID or relevant data)
     })
     .onUploadComplete(() => {}),
 
-  chapterVideo: f({ video: { maxFileSize: "512B", maxFileCount: 1 } })
+  chapterVideo: f({ video: { maxFileSize: "512GB", maxFileCount: 1 } })
     .middleware(async (req) => {
       const authResult = handelAuth();
-
-      const file = req.files;
-      if (file[0].size > 4 * 1024 * 1024) {
-        throw new UploadThingError("File size exceeds the limit.");
-      }
 
       return authResult; // Pass user ID or relevant data)
     })
