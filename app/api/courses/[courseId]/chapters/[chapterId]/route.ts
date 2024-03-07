@@ -9,6 +9,81 @@ const { video } = new Mux({
   tokenSecret: process.env["MUX_TOKEN_SECRET"],
 });
 
+export async function DELETE(
+  req: Request,
+  { params }: { params: { chapterId: string; courseId: string } }
+) {
+  try {
+    const { userId } = auth();
+    if (!userId) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+    const courseOwner = await db.course.findUnique({
+      where: { id: params.courseId, userId },
+    });
+    if (!courseOwner) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+    const chapter = await db.chapter.findUnique({
+      where: { id: params.chapterId, courseId: params.courseId },
+    });
+    if (!chapter) {
+      return NextResponse.json({ message: "Not Found" }, { status: 404 });
+    }
+
+    const existingVideo = await db.chapter.findUnique({
+      where: { id: params.chapterId },
+    });
+
+    if (chapter.videoUrl) {
+      const existingmuxData = await db.muxData.findFirst({
+        where: { chapterId: params.chapterId },
+      });
+
+      if (existingmuxData) {
+        await db.muxData.delete({
+          where: { id: existingmuxData.id },
+        });
+        try {
+          await video.assets.delete(chapter.videoUrl);
+        } catch (error) {
+          console.log("vide not found");
+        }
+        if (existingVideo?.videoUrl) {
+          const newUrl = existingVideo.videoUrl.substring(
+            existingVideo.videoUrl.lastIndexOf("/") + 1
+          );
+          const utapi = new UTApi();
+          await utapi.deleteFiles(newUrl);
+        }
+      }
+    }
+    const deleteChapter = await db.chapter.delete({
+      where: { id: params.chapterId, courseId: params.courseId },
+    });
+
+    const publishedChapterInCourse = await db.chapter.findMany({
+      where: {
+        courseId: params.courseId,
+        isPublished: true,
+      },
+    });
+    if (!publishedChapterInCourse.length) {
+      await db.course.update({
+        where: { id: params.courseId },
+        data: {
+          isPublished: false,
+        },
+      });
+    }
+    return NextResponse.json(deleteChapter, { status: 200 });
+  } catch (error) {
+    console.log("[CHAPTER_ID_DELETE]", error);
+
+    return NextResponse.json({ message: "Internal Error" }, { status: 500 });
+  }
+}
+
 export async function PATCH(
   req: Request,
   { params }: { params: { courseId: string; chapterId: string } }
@@ -32,7 +107,11 @@ export async function PATCH(
       });
 
       if (existingMuxData) {
-        await video.assets.delete(existingMuxData.assetId);
+        try {
+          await video.assets.delete(existingMuxData.assetId);
+        } catch (error) {
+          console.log("vide not found");
+        }
         await db.muxData.delete({
           where: { id: existingMuxData.id },
         });

@@ -57,11 +57,8 @@ const ChapterAccessForm = ({
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.patch(
-        `/api/courses/${courseId}/chapters/${chapterId}`,
-        data
-      );
-      toast.success("Chapter isFree updated");
+      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, data);
+      toast.success("Chapter Access updated");
       toggleEdit();
       router.refresh();
     } catch (error) {
@@ -115,11 +112,9 @@ const ChapterAccessForm = ({
                     />
                   </FormControl>
                   <div className="space-y-1 leading-none">
-                    <FormDescription>
-                      <p className="text-sm text-slate-700">
-                        Check this box if you want to make this chapter free for
-                        preview
-                      </p>
+                    <FormDescription className="text-sm text-slate-700">
+                      Check this box if you want to make this chapter free for
+                      preview
                     </FormDescription>
                   </div>
                   <FormMessage />
