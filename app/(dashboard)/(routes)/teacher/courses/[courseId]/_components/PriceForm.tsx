@@ -20,7 +20,6 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
 import { Course } from "@prisma/client";
 import { Input } from "@/components/ui/input";
 import { formatprice } from "@/lib/format";
@@ -43,14 +42,14 @@ const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      price: initialData?.price || undefined,
+      price: initialData?.price || 0,
     },
   });
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.patch(`/api/courses/${courseId}`, data);
+      await axios.patch(`/api/courses/${courseId}`, data);
       toast.success("Course description updated");
       toggleEdit();
       router.refresh();
