@@ -28,27 +28,37 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   if (params.courseId.length > 24) {
     return redirect("/");
   }
-  const courseData = await db.course.findUnique({
-    where: { id: params.courseId, userId },
-    include: {
-      chapters: {
-        orderBy: {
-          position: "asc",
+  const courseData = await db.course
+    .findUnique({
+      where: { id: params.courseId, userId },
+      include: {
+        chapters: {
+          orderBy: {
+            position: "asc",
+          },
+        },
+        attachments: {
+          orderBy: {
+            createdAt: "desc",
+          },
         },
       },
-      attachments: {
-        orderBy: {
-          createdAt: "desc",
-        },
-      },
-    },
-  });
+    })
+    .catch((error) => {
+      console.log(error);
+      return redirect("/");
+    });
 
-  const categories = await db.category.findMany({
-    orderBy: {
-      name: "asc",
-    },
-  });
+  const categories = await db.category
+    .findMany({
+      orderBy: {
+        name: "asc",
+      },
+    })
+    .catch((error) => {
+      console.log(error);
+      return redirect("/");
+    });
 
   if (!courseData) {
     return redirect("/");

@@ -35,11 +35,12 @@ const CreateCourse = () => {
       title: "",
     },
   });
-  const { isSubmitting, isValid } = form.formState;
+  const { isSubmitting, isValid, isSubmitSuccessful } = form.formState;
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
       const response = await axios.post("/api/courses", data);
       router.push(`/teacher/courses/${response.data.id}`);
+      router.refresh();
       toast.success("Course created successfully!");
     } catch (error) {
       toast.error("something went wrong!");
@@ -47,7 +48,7 @@ const CreateCourse = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full p-6">
+    <div className="max-w-5xl mx-auto flex md:items-center md:justify-center h-full">
       <div className="">
         <h1 className="text-2xl">Name your course</h1>
         <p className="text-sm text-slate-600">
@@ -80,8 +81,8 @@ const CreateCourse = () => {
               )}
             />
             <div className="flex items-center gap-x-2">
-              {!isValid || isSubmitting ? (
-                <Link href={"/"}>
+              {!isValid ? (
+                <Link href={"/teacher/courses"}>
                   <Button size={"sm"} variant={"destructive"} type="button">
                     Cancel
                   </Button>
@@ -97,7 +98,7 @@ const CreateCourse = () => {
                 </Button>
               )}
               <Button
-                disabled={!isValid || isSubmitting}
+                disabled={!isValid || isSubmitting || isSubmitSuccessful}
                 type="submit"
                 variant={"default"}
               >

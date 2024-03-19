@@ -19,6 +19,7 @@ const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
   const router = useRouter();
   const confetti = useConfettiStore();
   const [isLoading, setIsLoading] = useState(false);
+  const [isdeleted, setIsDeleted] = useState(false);
 
   const onClick = async () => {
     try {
@@ -46,6 +47,7 @@ const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
       await axios.delete(`/api/courses/${courseId}`);
 
       toast.success("Course deleted");
+      setIsDeleted(true);
       router.push(`/teacher/courses/`);
       router.refresh();
     } catch (error) {
@@ -59,14 +61,14 @@ const Actions = ({ disabled, courseId, isPublished }: ActionsProps) => {
     <div className="flex items-center gap-x-2">
       <Button
         onClick={onClick}
-        disabled={disabled || isLoading}
+        disabled={disabled || isLoading || isdeleted}
         variant="outline"
         size="sm"
       >
         {isPublished ? "Unpublish" : "Publish"}
       </Button>
       <ConfirmModal onConfirm={onDelete}>
-        <Button size="sm" disabled={isLoading}>
+        <Button size="sm" disabled={isLoading || isdeleted}>
           <Trash className="h-4 w-4" />
         </Button>
       </ConfirmModal>
