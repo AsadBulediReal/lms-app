@@ -72,6 +72,30 @@ body,
   }
 }
 
+/* body {
+  scrollbar-color: hsla(0, 0%, 19%, 0.5) transparent;
+  scrollbar-width: thin;
+} */
+
+::-webkit-scrollbar {
+  width: 2em;
+  height: 1em;
+}
+
+::-webkit-scrollbar-track {
+  background: hsla(0, 0%, 19%, 0.219);
+  margin-block: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsla(0, 0%, 19%, 0.288);
+  border-radius: 100vw;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsla(0, 0%, 0%, 0.507);
+}
+
 @layer base {
   * {
     @apply border-border;

@@ -25,6 +25,12 @@ async function main() {
         {
           name: "Filming",
         },
+        {
+          name: "Fitness",
+        },
+        {
+          name: "Music",
+        },
       ],
     });
     console.log("success");
