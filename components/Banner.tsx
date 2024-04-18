@@ -19,19 +19,21 @@ const bannerVariants = cva(
 );
 
 interface BannerProps extends VariantProps<typeof bannerVariants> {
-  labeel: string;
+  label: string;
+  height?: string;
 }
 
 const iconMap = {
   warning: AlertTriangle,
   success: CheckCircleIcon,
 };
-const Banner = ({ labeel, variant }: BannerProps) => {
+const Banner = ({ label, variant, height }: BannerProps) => {
   const Icon = iconMap[variant || "warning"];
+  const isHeight = height ? height : "";
   return (
-    <div className={cn(bannerVariants({ variant }))}>
+    <div className={`${cn(bannerVariants({ variant }))} ${isHeight}`}>
       <Icon className="h-4 w-4 mr-2" />
-      {labeel}
+      {label}
     </div>
   );
 };

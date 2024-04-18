@@ -84,7 +84,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
       {!courseData.isPublished && (
         <Banner
           variant="warning"
-          labeel="This course is unpublished. It will not be visible to the students!"
+          label="This course is unpublished. It will not be visible to the students!"
         />
       )}
       <div className="p-6">
