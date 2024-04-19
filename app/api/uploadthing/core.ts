@@ -30,7 +30,7 @@ export const ourFileRouter = {
     })
     .onUploadComplete(() => {}),
 
-  chapterVideo: f({ video: { maxFileSize: "512GB", maxFileCount: 1 } })
+  chapterVideo: f({ video: { maxFileSize: "4GB", maxFileCount: 1 } })
     .middleware(async (req) => {
       const authResult = handelAuth();
 

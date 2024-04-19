@@ -17,6 +17,7 @@ import AttachmentForm from "./_components/AttachmentForm";
 import ChapterForm from "./_components/ChapterForm";
 import Banner from "@/components/Banner";
 import Actions from "./_components/Actions";
+import CourseIsFree from "./_components/CourseIsFree";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId } = auth();
@@ -68,7 +69,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
     courseData.title,
     courseData.description,
     courseData.imageUrl,
-    courseData.price,
+    courseData.price || courseData.isFree,
     courseData.categoryId,
     courseData.chapters.some((chapter) => chapter.isPublished),
   ];
@@ -144,6 +145,7 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
                 <h2 className="text-xl">Sell your course</h2>
               </div>
               <PriceForm initialData={courseData} courseId={courseData.id} />
+              <CourseIsFree courseId={courseData.id} initialData={courseData} />
             </div>
             <div>
               <div className="flex items-center gap-x-2">
