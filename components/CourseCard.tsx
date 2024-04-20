@@ -48,7 +48,7 @@ const CourseCard = ({
             <div className="my-3 flex items-center gap-x-2 text-sm md:text-xs">
               TODO: Progress component
             </div>
-          ) : price === 0 ? (
+          ) : price === null || price == 0 ? (
             <p className="text-base md:text-sm font-medium text-slate-700">
               FREE
             </p>

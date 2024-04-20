@@ -1,5 +1,4 @@
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+
 import React from "react";
 import { DataTable } from "./_components/DataTable";
 import { columns } from "./_components/columns";
@@ -8,9 +7,9 @@ import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
 
 const courses = async () => {
-  const { userId } = auth();
+  const { userId, sessionClaims } = auth();
 
-  if (!userId) {
+  if (sessionClaims?.metadata.role !== "admin" || !userId) {
     return redirect("/");
   }
   const course = await db.course.findMany({

@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request, res: Response) {
   try {
-    const { userId } = auth();
+    const { userId, sessionClaims } = auth();
     const { title } = await req.json();
 
-    if (!userId) {
+    if (sessionClaims?.metadata.role !== "admin" || !userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 

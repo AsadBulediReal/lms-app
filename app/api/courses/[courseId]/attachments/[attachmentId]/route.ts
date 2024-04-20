@@ -10,11 +10,11 @@ export async function POST(
   try {
     const data = await req.json();
 
-    const { userId } = auth();
-    if (!userId) {
+    const { userId, sessionClaims } = auth();
+
+    if (sessionClaims?.metadata.role !== "admin" || !userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
-
     const courseOwner = db.course.findUnique({
       where: { id: params.courseId, userId },
     });

@@ -57,10 +57,22 @@ const ChapterDescriptionForm = ({
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-      const response = await axios.patch(
-        `/api/courses/${courseId}/chapters/${chapterId}`,
-        data
-      );
+      const trimmedText = data.description
+        .trim()
+        .replace(/^<p>/g, "")
+        .replace(/<\/p>/g, "");
+      console.log(data);
+
+      if (trimmedText.trim() === "" || trimmedText === "<br>") {
+        await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, {
+          description: "",
+        });
+        toast.success("Chapter description updated");
+        toggleEdit();
+        router.refresh();
+        return;
+      }
+      await axios.patch(`/api/courses/${courseId}/chapters/${chapterId}`, data);
       toast.success("Chapter description updated");
       toggleEdit();
       router.refresh();

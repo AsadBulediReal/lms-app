@@ -7,10 +7,12 @@ export async function PATCH(
   { params }: { params: { courseId: string } }
 ) {
   try {
-    const { userId } = auth();
-    if (!userId) {
+    const { userId, sessionClaims } = auth();
+
+    if (sessionClaims?.metadata.role !== "admin" || !userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
+
     const course = await db.course.findUnique({
       where: { id: params.courseId, userId },
       include: {
@@ -27,13 +29,14 @@ export async function PATCH(
     const hasPublishedChapter = course.chapters.some(
       (chapter) => chapter.isPublished
     );
+    const courseIsfree = course.isFree ? course.isFree : course.price;
     if (
       !course.title ||
       !course.categoryId ||
       !course.description ||
       !course.imageUrl ||
       !hasPublishedChapter ||
-      !course.price
+      !courseIsfree
     ) {
       return NextResponse.json(
         { message: "Missing required fields" },

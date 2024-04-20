@@ -17,8 +17,9 @@ const EditChapter = async ({
 }: {
   params: { courseId: string; chapterId: string };
 }) => {
-  const { userId } = auth();
-  if (!userId) {
+  const { userId, sessionClaims } = auth();
+
+  if (sessionClaims?.metadata.role !== "admin" || !userId) {
     return redirect("/");
   }
   const courseOwner = db.course
@@ -56,6 +57,31 @@ const EditChapter = async ({
   const completionText = `(${completedFields}/${totalFields})`;
 
   const isComplete = requiredFields.every(Boolean);
+
+  if (!isComplete) {
+    if (chapter.isPublished) {
+      await db.chapter.update({
+        where: { id: params.chapterId, courseId: params.courseId },
+        data: {
+          isPublished: false,
+        },
+      });
+      const publishedChaptersInCourse = await db.chapter.findMany({
+        where: {
+          courseId: params.courseId,
+          isPublished: true,
+        },
+      });
+      if (!publishedChaptersInCourse.length) {
+        await db.course.update({
+          where: { id: params.courseId },
+          data: {
+            isPublished: false,
+          },
+        });
+      }
+    }
+  }
 
   return (
     <>

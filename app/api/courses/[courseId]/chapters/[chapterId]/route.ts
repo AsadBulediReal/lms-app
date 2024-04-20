@@ -89,10 +89,11 @@ export async function PATCH(
   { params }: { params: { courseId: string; chapterId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const { userId, sessionClaims } = auth();
+
     const { isPublished, ...updatedData } = await req.json();
 
-    if (!userId) {
+    if (sessionClaims?.metadata.role !== "admin" || !userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
     const courseOwner = await db.course.findUnique({

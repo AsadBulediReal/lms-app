@@ -18,11 +18,12 @@ import ChapterForm from "./_components/ChapterForm";
 import Banner from "@/components/Banner";
 import Actions from "./_components/Actions";
 import CourseIsFree from "./_components/CourseIsFree";
+import axios from "axios";
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
-  const { userId } = auth();
+  const { userId, sessionClaims } = auth();
 
-  if (!userId) {
+  if (sessionClaims?.metadata.role !== "admin" || !userId) {
     return redirect("/");
   }
 
@@ -79,6 +80,18 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
 
   const completionText = `(${completedFields}/${totalFields})`;
   const isComplete = requiredFields.every(Boolean);
+
+  if (!isComplete) {
+    if (courseData.isPublished === true) {
+      await db.course.update({
+        where: { id: params.courseId, userId },
+        data: {
+          isPublished: false,
+        },
+      });
+      console.log("lol");
+    }
+  }
 
   return (
     <>

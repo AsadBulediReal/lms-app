@@ -7,10 +7,11 @@ export async function POST(
   { params }: { params: { courseId: string } }
 ) {
   try {
-    const { userId } = auth();
+    const { userId, sessionClaims } = auth();
+
     const data = await req.json();
 
-    if (!userId) {
+    if (sessionClaims?.metadata.role !== "admin" || !userId) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
