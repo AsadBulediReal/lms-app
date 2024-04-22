@@ -39,12 +39,16 @@ export const getChapter = async ({
     let attachments: Attachment[] = [];
     let nextChapter: Chapter | null = null;
 
+    const allAttacments = await db.attachment.findMany({
+      where: {
+        courseId: courseId,
+      },
+    });
+
+    const totalAttachments = allAttacments.length;
+
     if (purchase) {
-      attachments = await db.attachment.findMany({
-        where: {
-          courseId: courseId,
-        },
-      });
+      attachments = allAttacments;
     }
     if (chapter.isFree || purchase) {
       muxData = await db.muxData.findUnique({
@@ -84,6 +88,7 @@ export const getChapter = async ({
       nextChapter,
       userProgress,
       purchase,
+      totalAttachments,
     };
   } catch (error) {
     console.log("[GET_CHAPTER]", error);
@@ -95,6 +100,7 @@ export const getChapter = async ({
       nextChapter: null,
       userProgress: null,
       purchase: null,
+      totalAttachments: 0,
     };
   }
 };

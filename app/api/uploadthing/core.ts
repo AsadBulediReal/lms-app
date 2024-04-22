@@ -22,7 +22,24 @@ export const ourFileRouter = {
     })
     .onUploadComplete(() => {}),
 
-  courseAttachment: f(["text", "image", "video", "audio", "pdf"])
+  courseAttachment: f({
+    image: {
+      maxFileSize: "8MB",
+      maxFileCount: 4,
+    },
+    video: {
+      maxFileSize: "128MB",
+      maxFileCount: 1,
+    },
+    text: {
+      maxFileSize: "16MB",
+      maxFileCount: 4,
+    },
+    pdf: {
+      maxFileSize: "64MB",
+      maxFileCount: 1,
+    },
+  })
     .middleware(async (req) => {
       const authResult = handelAuth();
 

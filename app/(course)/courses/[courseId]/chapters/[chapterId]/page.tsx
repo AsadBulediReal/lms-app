@@ -5,6 +5,9 @@ import { redirect } from "next/navigation";
 import React from "react";
 import VideoPlayer from "./_components/VideoPlayer";
 import CourseEnrollButton from "./_components/CourseEnrollButton";
+import { Separator } from "@/components/ui/separator";
+import Preview from "@/components/Preview";
+import { File } from "lucide-react";
 
 const ChapterIdPage = async ({
   params,
@@ -23,6 +26,7 @@ const ChapterIdPage = async ({
     nextChapter,
     userProgress,
     purchase,
+    totalAttachments,
   } = await getChapter({
     courseId: params.courseId,
     chapterId: params.chapterId,
@@ -34,6 +38,7 @@ const ChapterIdPage = async ({
   }
   const isLocked = !chapter.isFree && !purchase;
   const completeOnEnd = !!purchase && !userProgress?.isCompleted;
+
   return (
     <div>
       {userProgress?.isCompleted && (
@@ -63,8 +68,19 @@ const ChapterIdPage = async ({
           />
         </div>
         <div>
-          <div className="p-4 flex flex-col md:flex-row items-center justify-between">
-            <h2 className="text-2xl font-semibold mb-2">{chapter.title}</h2>
+          <div className="pt-4 pl-4 pr-4 pb-2 flex flex-col md:flex-row items-center justify-between">
+            <div className="flex md:block flex-col justify-center items-center w-full md:w-auto">
+              <h2 className="text-2xl pl-2 font-semibold mb-2 capitalize">
+                {chapter.title}
+              </h2>
+              <div className="flex items-center justify-center p-3 mb-4 w-full md:w-60 bg-sky-200 border text-sky-700 rounded-md">
+                <File className="h-4 w-4" />
+                <p className="ml-1 line-clamp-1">
+                  Total Attachments: {totalAttachments}
+                </p>
+              </div>
+            </div>
+
             {purchase ? (
               <div>//TODO: Course progress button</div>
             ) : (
@@ -74,6 +90,29 @@ const ChapterIdPage = async ({
               />
             )}
           </div>
+          <Separator />
+          <div>
+            <Preview value={chapter.description!} />
+          </div>
+          {!!attachments.length && (
+            <>
+              <Separator />
+              <div className="p-4 flex flex-col gap-y-4">
+                {attachments.map((attachment, index) => (
+                  <a
+                    href={attachment.url}
+                    target="_blank"
+                    key={attachment.id + index}
+                    className="flex items-center p-3 gap-x-2 w-full bg-sky-200 border text-sky-700 rounded-md hover:underline"
+                    download={attachment.name}
+                  >
+                    <File />
+                    <p className="line-clamp-1">{attachment.name}</p>
+                  </a>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>
