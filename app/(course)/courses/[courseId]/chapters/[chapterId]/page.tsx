@@ -8,6 +8,7 @@ import CourseEnrollButton from "./_components/CourseEnrollButton";
 import { Separator } from "@/components/ui/separator";
 import Preview from "@/components/Preview";
 import { File } from "lucide-react";
+import CourseProgressButton from "./_components/CourseProgressButton";
 
 const ChapterIdPage = async ({
   params,
@@ -68,21 +69,32 @@ const ChapterIdPage = async ({
           />
         </div>
         <div>
-          <div className="pt-4 pl-4 pr-4 pb-2 flex flex-col md:flex-row items-center justify-between">
+          <div
+            className={`pt-4 pl-4 pr-4 ${
+              !purchase ? "pb-2" : "pb-4"
+            } flex flex-col md:flex-row items-center justify-between`}
+          >
             <div className="flex md:block flex-col justify-center items-center w-full md:w-auto">
               <h2 className="text-2xl pl-2 font-semibold mb-2 capitalize">
                 {chapter.title}
               </h2>
-              <div className="flex items-center justify-center p-3 mb-4 w-full md:w-60 bg-sky-200 border text-sky-700 rounded-md">
-                <File className="h-4 w-4" />
-                <p className="ml-1 line-clamp-1">
-                  Total Attachments: {totalAttachments}
-                </p>
-              </div>
+              {!purchase && (
+                <div className="flex items-center justify-center p-3 mb-2 w-full md:w-60 bg-sky-200 border text-sky-700 rounded-md">
+                  <File className="h-4 w-4" />
+                  <p className="ml-1 line-clamp-1">
+                    Total Attachments: {totalAttachments}
+                  </p>
+                </div>
+              )}
             </div>
 
             {purchase ? (
-              <div>//TODO: Course progress button</div>
+              <CourseProgressButton
+                chapterId={params.chapterId}
+                courseId={params.courseId}
+                nextChapterId={nextChapter?.id}
+                isCompleted={!!userProgress?.isCompleted}
+              />
             ) : (
               <CourseEnrollButton
                 courseId={params.courseId}

@@ -19,12 +19,24 @@ const CoursesIdPage = async ({ params }: { params: { courseId: string } }) => {
       },
     },
   });
+  const chapterProgress = await db.userProgress.findFirst({
+    where: {
+      isCompleted: false,
+    },
+  });
   if (!course) {
     return redirect("/");
   }
-  return redirect(
-    `/courses/${params.courseId}/chapters/${course.chapters[0].id}`
-  );
+
+  if (chapterProgress?.chapterId) {
+    return redirect(
+      `/courses/${params.courseId}/chapters/${chapterProgress?.chapterId}`
+    );
+  } else {
+    return redirect(
+      `/courses/${params.courseId}/chapters/${course.chapters[0].id}`
+    );
+  }
 };
 
 export default CoursesIdPage;
