@@ -31,7 +31,7 @@ const CourseCard = ({
           <Image src={imageUrl} alt={title} fill className="object-cover" />
         </div>
         <div className="flex flex-col pt-2">
-          <h1 className="text-lg md:text-base font-medium group-hover:text-sky-700">
+          <h1 className="text-lg md:text-base font-medium group-hover:text-sky-700 overflow-hidden text-ellipsis text-nowrap max-w-[24rem] ">
             {title}
           </h1>
           <p className="text-xs text-muted-foreground text-slate-700 group-hover:text-sky-700">

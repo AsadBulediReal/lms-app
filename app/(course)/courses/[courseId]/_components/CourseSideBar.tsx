@@ -30,7 +30,9 @@ const CourseSideBar = async ({ course, progress }: CourseSideBarProps) => {
   return (
     <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
       <div className="p-7 flex flex-col border-b justify-center items-center">
-        <h1 className="font-semibold">{course.title}</h1>
+        <h1 className="font-semibold overflow-hidden text-ellipsis text-nowrap max-w-[18rem]">
+          {course.title}
+        </h1>
       </div>
       {isPurchased && (
         <div className="p-7 flex flex-col justify-center">
