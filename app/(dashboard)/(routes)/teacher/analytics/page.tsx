@@ -1,9 +1,25 @@
-import React from 'react'
+import { getAnalytics } from "@/actions/get-analytics";
+import { auth } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+import React from "react";
+import DataCard from "./_components/DataCard";
 
-const Analytics = () => {
+const Analytics = async () => {
+  const { userId, sessionClaims } = auth();
+
+  if (!userId || sessionClaims?.metadata?.role !== "admin") {
+    return redirect("/");
+  }
+
+  const { data, totalRevenue, totalSales } = await getAnalytics(userId);
+
   return (
-    <div>Analytics</div>
-  )
-}
+    <div className="p-6 overflow-hidden">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <DataCard />
+      </div>
+    </div>
+  );
+};
 
-export default Analytics
+export default Analytics;

@@ -89,7 +89,6 @@ const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
           isPublished: false,
         },
       });
-      console.log("lol");
     }
   }
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { CheckCircle, Lock, PlayCircle } from "lucide-react";
+import { CheckCircle, Lock, PlayCircle, PauseCircle } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 interface CourseSideBarItemProps {
@@ -22,8 +22,16 @@ const CourseSideBarItem = ({
   const router = useRouter();
   const pathName = usePathname();
 
-  const Icon = isLocked ? Lock : isCompleted ? CheckCircle : PlayCircle;
   const isActive = pathName.includes(id);
+
+  const Icon = isLocked
+    ? Lock
+    : isActive
+    ? PauseCircle
+    : isCompleted
+    ? CheckCircle
+    : PlayCircle;
+
   const handleClick = () => {
     router.push(`/courses/${courseId}/chapters/${id}`);
   };
@@ -45,12 +53,13 @@ const CourseSideBarItem = ({
         <Icon
           className={cn(
             "text-slate-500",
-            isActive && "text-sky-700",
+            isActive && "text-sky-700 animate-wiggle",
             isCompleted && "text-emerald-700"
           )}
           size={22}
         />
-        <p className="text-left text-base text-ellipsis w-[90%] overflow-hidden">
+
+        <p className="text-left text-base text-ellipsis w-[90%] overflow-hidden text-nowrap ml-1">
           {label}
         </p>
       </div>

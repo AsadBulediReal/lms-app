@@ -124,7 +124,7 @@ export function DataTable<TData, TValue>({
             )}
           </TableBody>
         </Table>
-        L
+        
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
         <Button

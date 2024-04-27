@@ -67,10 +67,15 @@ export const columns: ColumnDef<Course>[] = [
     },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("price") || "0");
+      const isFree = row.original.isFree;
 
       return (
         <div className="text-right font-medium flex justify-start">
-          {formatprice(amount as Number)}
+          {isFree === null || (isFree === false && amount === 0)
+            ? "No Price"
+            : formatprice(amount) === "$0.00"
+            ? "Free"
+            : formatprice(amount)}
         </div>
       );
     },

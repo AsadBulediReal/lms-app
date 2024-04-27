@@ -56,8 +56,8 @@ const ChapterIdPage = async ({
           variant={"warning"}
         />
       )}
-      <div className="flex flex-col max-w-4xl mx-auto pb-20">
-        <div className="p-4">
+      <div className="flex flex-col mx-auto pb-20">
+        <div>
           <VideoPlayer
             chapterId={params.chapterId}
             title={chapter.title}
