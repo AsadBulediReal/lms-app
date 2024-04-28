@@ -5,8 +5,8 @@ import { UploadThingError } from "uploadthing/server";
 const f = createUploadthing();
 
 const handelAuth = () => {
-  const { userId } = auth();
-  if (!userId) {
+  const { userId, sessionClaims } = auth();
+  if (!userId && sessionClaims?.metadata?.role === "admin") {
     throw new UploadThingError("Unauthorized");
   }
   return { userId };

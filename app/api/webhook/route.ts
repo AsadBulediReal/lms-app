@@ -29,6 +29,7 @@ export async function POST(req: Request) {
   const session = event.data.object as Stripe.Checkout.Session;
   const userId = session?.metadata?.userId;
   const courseId = session?.metadata?.courseId;
+  const price = session?.metadata?.price;
 
   if (event.type === "checkout.session.completed") {
     if (!userId || !courseId) {
@@ -42,6 +43,7 @@ export async function POST(req: Request) {
       data: {
         courseId: courseId,
         userId: userId,
+        price: Number(price),
       },
     });
   } else {

@@ -76,6 +76,7 @@ export async function POST(
       metadata: {
         courseId: course.id,
         userId: user.id,
+        price: course.isFree ? 0 : course.price,
       },
     });
     return NextResponse.json({

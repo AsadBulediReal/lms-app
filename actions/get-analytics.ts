@@ -14,7 +14,7 @@ const groupByPurchase = (purchases: PurchaseWithCourse[]) => {
     if (!grouped[courseTitle]) {
       grouped[courseTitle] = 0;
     }
-    grouped[courseTitle] += purchase.course.price!;
+    grouped[courseTitle] += purchase.price;
   });
   return grouped;
 };
@@ -22,7 +22,11 @@ const groupByPurchase = (purchases: PurchaseWithCourse[]) => {
 export const getAnalytics = async (userId: string) => {
   try {
     const purchases = await db.purchase.findMany({
-      where: { userId },
+      where: {
+        course: {
+          userId: userId,
+        },
+      },
       include: { course: true },
     });
     const groupedEarnings = groupByPurchase(purchases);

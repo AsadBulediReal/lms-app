@@ -26,10 +26,13 @@ const CoursesIdPage = async ({ params }: { params: { courseId: string } }) => {
     where: {
       courseId: params.courseId,
     },
+    orderBy: {
+      position: "asc",
+    },
     include: {
       userProgress: {
         where: {
-          userId: userId!,
+          userId: userId || "",
         },
       },
     },
