@@ -17,7 +17,7 @@ interface CourseSideBarProps {
 const CourseSideBar = async ({ course, progress }: CourseSideBarProps) => {
   const { userId } = auth();
 
-  let isPurchased;
+  let isPurchased: any;
 
   if (userId) {
     isPurchased = await db.purchase.findUnique({

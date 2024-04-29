@@ -22,4 +22,6 @@ const Editor = forwardRef<HTMLDivElement, EditorProps>((props, ref) => {
   );
 });
 
+Editor.displayName = "Editor";
+
 export default Editor;

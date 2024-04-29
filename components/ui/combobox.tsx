@@ -75,3 +75,5 @@ export const Combobox = React.forwardRef<HTMLDivElement, ComboboxProps>(
     );
   }
 );
+
+Combobox.displayName = "Combobox";
