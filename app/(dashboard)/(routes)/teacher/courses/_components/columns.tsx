@@ -15,7 +15,6 @@ import {
 import Link from "next/link";
 import axios from "axios";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 import { Badge } from "@/components/ui/badge";
 import { formatprice } from "@/lib/format";
 import Image from "next/image";
@@ -106,7 +105,7 @@ export const columns: ColumnDef<Course>[] = [
     id: "actions",
     cell: ({ row }) => {
       const { id } = row.original;
-      const router = useRouter();
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -122,7 +121,7 @@ export const columns: ColumnDef<Course>[] = [
                 await axios.delete(`/api/courses/${id}`);
 
                 toast.success("Course deleted");
-                router.refresh();
+                window.location.replace(window.location.pathname);
               }}
             >
               Delete
