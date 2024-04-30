@@ -84,3 +84,7 @@ body,
 .ql-container {
   font-size: 1rem !important;
 }
+
+body {
+  overflow-x: hidden;
+}
