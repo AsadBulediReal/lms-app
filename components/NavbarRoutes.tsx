@@ -30,7 +30,7 @@ const NavbarRoutes = ({ role }: NavbarRoutesProps) => {
           <Link href={"/"}>
             <Button size={"sm"} variant={"ghost"}>
               <LogOut className="h-4 w-4 mr-2" />
-              {isCoursePage ? "Back to courses" : "Exist"}
+              {isCoursePage ? "Back to dashboard" : "Exist"}
             </Button>
           </Link>
         ) : (

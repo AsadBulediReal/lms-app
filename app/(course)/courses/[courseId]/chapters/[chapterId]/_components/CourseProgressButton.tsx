@@ -59,7 +59,7 @@ const CourseProgressButton = ({
       onClick={onClick}
       disabled={isLoading}
     >
-      {isCompleted ? "Not completed" : "Mark as complete"}
+      {isCompleted ? "Undo Progress" : "Mark as complete"}
       <Icon className="h-4 w-4 ml-2" />
     </Button>
   );
