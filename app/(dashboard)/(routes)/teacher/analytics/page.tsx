@@ -5,6 +5,12 @@ import React from "react";
 import DataCard from "./_components/DataCard";
 import Chart from "./_components/Chart";
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Teacher - Analytics",
+};
+
 const Analytics = async () => {
   const { userId, sessionClaims } = auth();
 

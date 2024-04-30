@@ -10,6 +10,29 @@ import Preview from "@/components/Preview";
 import { File } from "lucide-react";
 import CourseProgressButton from "./_components/CourseProgressButton";
 
+import { Metadata } from "next";
+import { db } from "@/lib/db";
+
+// set dynamic metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    courseId: string;
+    chapterId: string;
+  };
+}): Promise<Metadata> {
+  const getChapterName = await db.chapter.findUnique({
+    where: {
+      id: params.chapterId,
+      courseId: params.courseId,
+    },
+  });
+  return {
+    title: getChapterName?.title,
+  };
+}
+
 const ChapterIdPage = async ({
   params,
 }: {

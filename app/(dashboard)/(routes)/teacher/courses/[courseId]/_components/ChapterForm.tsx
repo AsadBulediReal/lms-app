@@ -30,7 +30,14 @@ interface ChapterFormProps {
 }
 
 const formSchema = z.object({
-  title: z.string().min(1),
+  title: z
+    .string()
+    .min(4, {
+      message: "The title must contain a minimum of 4 characters.",
+    })
+    .max(30, {
+      message: "The title must contain a maximum of 30 characters.",
+    }),
 });
 
 const ChapterForm = ({ initialData, courseId }: ChapterFormProps) => {
@@ -45,6 +52,7 @@ const ChapterForm = ({ initialData, courseId }: ChapterFormProps) => {
     defaultValues: {
       title: "",
     },
+    mode: "all",
   });
   const { isSubmitting, isValid } = form.formState;
 

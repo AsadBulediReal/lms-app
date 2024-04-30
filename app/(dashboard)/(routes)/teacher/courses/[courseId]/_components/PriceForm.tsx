@@ -83,9 +83,7 @@ const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
             !initialData.price && "text-slate-500 italic"
           )}
         >
-          {initialData.price
-            ? formatprice(initialData.price as Number)
-            : "No price"}
+          {initialData?.price ? formatprice(initialData.price) : "No price"}
         </p>
       ) : (
         <Form {...form}>
@@ -103,7 +101,7 @@ const PriceForm = ({ initialData, courseId }: PriceFormProps) => {
                       type="number"
                       step={"0.01"}
                       min={0}
-                      max={1000}
+                      max={500}
                       disabled={isSubmitting}
                       placeholder="Set a price for your course"
                       {...field}

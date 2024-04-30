@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import { db } from "@/lib/db";
 import React from "react";
 import Categories from "./_components/Categories";
@@ -5,6 +6,10 @@ import SearchInput from "@/components/SearchInput";
 import { getCourses } from "@/actions/get-courses";
 import { auth } from "@clerk/nextjs";
 import CoursesList from "@/components/CoursesList";
+
+export const metadata: Metadata = {
+  title: "Search for Courses",
+};
 
 interface SearchParramsProps {
   searchParams: { title: string; categoryId: string };

@@ -2,6 +2,26 @@ import { db } from "@/lib/db";
 import { auth } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
+import { Metadata } from "next";
+
+// set dynamic metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    courseId: string;
+  };
+}): Promise<Metadata> {
+  const getChapterName = await db.course.findUnique({
+    where: {
+      id: params.courseId,
+    },
+  });
+  return {
+    title: getChapterName?.title,
+  };
+}
+
 const CoursesIdPage = async ({ params }: { params: { courseId: string } }) => {
   if (params.courseId.length > 24) {
     return redirect("/");

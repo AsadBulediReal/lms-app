@@ -30,9 +30,14 @@ interface TitleFormProps {
 }
 
 const formSchema = z.object({
-  title: z.string().min(4, {
-    message: "The title must contain a minimum of 4 characters.",
-  }),
+  title: z
+    .string()
+    .min(4, {
+      message: "The title must contain a minimum of 4 characters.",
+    })
+    .max(30, {
+      message: "The title must contain a maximum of 30 characters.",
+    }),
 });
 
 const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
@@ -44,6 +49,7 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialData,
+    mode: "all",
   });
   const { isSubmitting, isValid } = form.formState;
 
@@ -74,7 +80,9 @@ const TitleForm = ({ initialData, courseId }: TitleFormProps) => {
         </Button>
       </div>
       {!isEditing ? (
-        <p className="m-2 p-1 pl-4 bg-slate-200 font-medium capitalize lg:text-lg rounded-md">{initialData.title}</p>
+        <p className="m-2 p-1 pl-4 bg-slate-200 font-medium capitalize lg:text-lg rounded-md">
+          {initialData.title}
+        </p>
       ) : (
         <Form {...form}>
           <form

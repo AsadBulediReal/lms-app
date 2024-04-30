@@ -18,7 +18,26 @@ import ChapterForm from "./_components/ChapterForm";
 import Banner from "@/components/Banner";
 import Actions from "./_components/Actions";
 import CourseIsFree from "./_components/CourseIsFree";
-import axios from "axios";
+
+import { Metadata } from "next";
+
+// set dynamic metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    courseId: string;
+  };
+}): Promise<Metadata> {
+  const getChapterName = await db.course.findUnique({
+    where: {
+      id: params.courseId,
+    },
+  });
+  return {
+    title: "Course - " + getChapterName?.title,
+  };
+}
 
 const CourseIdPage = async ({ params }: { params: { courseId: string } }) => {
   const { userId, sessionClaims } = auth();

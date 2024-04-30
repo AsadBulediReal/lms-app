@@ -12,6 +12,28 @@ import ChapterVideoUpload from "./_components/ChapterVideoUpload";
 import Banner from "@/components/Banner";
 import ChapterActions from "./_components/ChapterActions";
 
+import { Metadata } from "next";
+
+// set dynamic metadata
+export async function generateMetadata({
+  params,
+}: {
+  params: {
+    courseId: string;
+    chapterId: string;
+  };
+}): Promise<Metadata> {
+  const getChapterName = await db.chapter.findUnique({
+    where: {
+      id: params.chapterId,
+      courseId: params.courseId,
+    },
+  });
+  return {
+    title: "Editing - " + getChapterName?.title,
+  };
+}
+
 const EditChapter = async ({
   params,
 }: {

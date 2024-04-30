@@ -20,8 +20,10 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Textarea } from "@/components/ui/textarea";
+
 import { Course } from "@prisma/client";
+import Preview from "@/components/Preview";
+import Editor from "@/components/Editor";
 
 interface DescriptionFormProps {
   initialData: Course;
@@ -29,9 +31,14 @@ interface DescriptionFormProps {
 }
 
 const formSchema = z.object({
-  description: z.string().min(10, {
-    message: "The description must contain a minimum of 10 characters.",
-  }),
+  description: z
+    .string()
+    .min(10, {
+      message: "The description must contain a minimum of 10 characters.",
+    })
+    .max(500, {
+      message: "The description must contain a maximum of 500 characters.",
+    }),
 });
 
 const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
@@ -43,14 +50,15 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      description: initialData?.description || "",
+      description: initialData?.description!,
     },
+    mode: "all",
   });
   const { isSubmitting, isValid } = form.formState;
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     try {
-       await axios.patch(`/api/courses/${courseId}`, data);
+      await axios.patch(`/api/courses/${courseId}`, data);
       toast.success("Course description updated");
       toggleEdit();
       router.refresh();
@@ -75,14 +83,17 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
         </Button>
       </div>
       {!isEditing ? (
-        <p
+        <div
           className={cn(
             "m-2 p-1 pl-4 bg-slate-200 font-medium md:text-lg rounded-md text-ellipsis overflow-hidden",
             !initialData.description && "text-slate-500 italic"
           )}
         >
-          {initialData.description || "No Description"}
-        </p>
+          {!initialData.description && "No Description"}
+          {initialData.description && (
+            <Preview value={initialData.description} />
+          )}
+        </div>
       ) : (
         <Form {...form}>
           <form
@@ -95,11 +106,7 @@ const DescriptionForm = ({ initialData, courseId }: DescriptionFormProps) => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Textarea
-                      disabled={isSubmitting}
-                      placeholder="Give your course a description"
-                      {...field}
-                    />
+                    <Editor {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
