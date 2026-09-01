@@ -8,7 +8,7 @@
 
 Welcome to **ELearner**! This project is a comprehensive Learning Management System built to provide a seamless educational experience with video streaming, course management, and secure payments.
 
-**[🚀 View Live Demo](#)** <!-- Replace with actual link -->
+**[🚀 View Live Demo](https://lms-app-delta.vercel.app/)**
 
 ## 🌟 Overview
 
