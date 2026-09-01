@@ -94,6 +94,6 @@ The app will be available at `http://localhost:3000`.
 ## 📬 Contact
 
 Created by **[Asad Jamil Buledi](https://github.com/AsadBulediReal)** - feel free to reach out!
-- LinkedIn: [Asad Jamil Buledi](https://linkedin.com/in/asad-jamil-buledi-7b1154245)
+- LinkedIn: [Asad Jamil Buledi](https://www.linkedin.com/in/asad-jamil-buledi)
 - GitHub: [AsadBulediReal](https://github.com/AsadBulediReal)
 - Email: [bulediasadjamil@gmail.com](mailto:bulediasadjamil@gmail.com)
