@@ -6,8 +6,6 @@
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 ![Prisma](https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white)
 
-![ELearner Banner](./placeholder-image.png)
-
 Welcome to **ELearner**! This project is a comprehensive Learning Management System built to provide a seamless educational experience with video streaming, course management, and secure payments.
 
 **[🚀 View Live Demo](#)** <!-- Replace with actual link -->
@@ -16,14 +14,26 @@ Welcome to **ELearner**! This project is a comprehensive Learning Management Sys
 
 I built this project to create a robust platform for online education. It features student and teacher modes, enabling content creators to publish courses with video lessons and attachments, while students can track their progress, purchase courses, and learn effectively.
 
-## 📸 Screenshots & Previews
+## 📸 Demos & Previews
 
-<!-- Add your actual screenshots or GIFs here -->
-*Include a GIF demonstrating the course player and dashboard here to immediately grab attention.*
+### 🎓 Student Experience & Course Player
+*Seamless course discovery, interactive video streaming with Mux, chapter progress tracking, and purchase flow.*
 
-| Course Dashboard | Video Player |
-| :---: | :---: |
-| <img src="./Dashboard.gif" alt="Dashboard" width="400" /> | <img src="./Course-Player.gif" alt="Course Player" width="400" /> |
+![Student Experience & Course Player](./assets/LMS-User-Panel.gif)
+
+---
+
+### 👨‍🏫 Teacher Dashboard & Analytics
+*Comprehensive educator controls with real-time revenue analytics, sales insights, and course performance.*
+
+![Teacher Dashboard](./assets/LMS-Teacher-Dashboard.gif)
+
+---
+
+### 🛠️ Course & Chapter Creation
+*Intuitive course editor with drag-and-drop chapter reordering, rich text descriptions, and instant video uploads.*
+
+![Course & Chapter Creation](./assets/LMS-Teacher-course-creation.gif)
 
 ## 🚀 Key Features
 
