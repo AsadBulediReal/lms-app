@@ -47,13 +47,13 @@ I built this project to create a robust platform for online education. It featur
 
 ## 🛠️ Tech Stack
 
-- **Framework**: <a href="https://nextjs.org/" target="_blank">Next.js 14</a> + <a href="https://react.dev/" target="_blank">React 18</a>
-- **Styling**: <a href="https://tailwindcss.com/" target="_blank">Tailwind CSS</a> + <a href="https://www.radix-ui.com/" target="_blank">Radix UI</a>
-- **Database / ORM**: <a href="https://www.prisma.io/" target="_blank">Prisma</a>
-- **Authentication**: <a href="https://clerk.com/" target="_blank">Clerk</a>
-- **Payments**: <a href="https://stripe.com/" target="_blank">Stripe</a>
-- **Video Hosting**: <a href="https://mux.com/" target="_blank">Mux</a>
-- **File Uploads**: <a href="https://uploadthing.com/" target="_blank">Uploadthing</a>
+- **Framework**: [Next.js 14](https://nextjs.org/) + [React 18](https://react.dev/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [Radix UI](https://www.radix-ui.com/)
+- **Database / ORM**: [Prisma](https://www.prisma.io/)
+- **Authentication**: [Clerk](https://clerk.com/)
+- **Payments**: [Stripe](https://stripe.com/)
+- **Video Hosting**: [Mux](https://mux.com/)
+- **File Uploads**: [Uploadthing](https://uploadthing.com/)
 
 ## 📂 Getting Started
 
@@ -93,7 +93,7 @@ The app will be available at `http://localhost:3000`.
 
 ## 📬 Contact
 
-Created by **<a href="https://github.com/AsadBulediReal" target="_blank">Asad Jamil Buledi</a>** - feel free to reach out!
-- LinkedIn: <a href="https://www.linkedin.com/in/asad-jamil-buledi" target="_blank">Asad Jamil Buledi</a>
-- GitHub: <a href="https://github.com/AsadBulediReal" target="_blank">AsadBulediReal</a>
-- Email: <a href="mailto:bulediasadjamil@gmail.com" target="_blank">bulediasadjamil@gmail.com</a>
+Created by **[Asad Jamil Buledi](https://github.com/AsadBulediReal)** - feel free to reach out!
+- LinkedIn: [Asad Jamil Buledi](https://www.linkedin.com/in/asad-jamil-buledi)
+- GitHub: [AsadBulediReal](https://github.com/AsadBulediReal)
+- Email: [bulediasadjamil@gmail.com](mailto:bulediasadjamil@gmail.com)
